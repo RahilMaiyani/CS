@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS T2 Exam Prep (Units 6–10) | 35-Mark Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        .chunk-card { transition: all 0.2s ease-in-out; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <!-- Sticky Header & Score Tracker -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-lg no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">LJU Sem-VII</span>
+                        <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">CS T2 Minimum-Prep Hub (Units 6–10)</h1>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">All 94 Exact QB Non-MCQ Questions + Missing Syllabus Topics + Command Cheat Sheet</p>
+                </div>
+
+                <!-- 35-Mark Calculator Pill -->
+                <div class="flex flex-wrap items-center gap-3 bg-slate-950/90 border border-slate-800 px-3.5 py-2 rounded-xl">
+                    <div class="text-xs">
+                        <span class="text-slate-400 block">Read Progress</span>
+                        <span id="progressCount" class="font-bold text-emerald-400 text-sm">0 / 100 items</span>
+                    </div>
+                    <div class="h-7 w-px bg-slate-800"></div>
+                    <div class="text-xs">
+                        <span class="text-slate-400 block">Est. Score (w/ 17 MCQ)</span>
+                        <span id="scoreEstimate" class="font-extrabold text-amber-400 text-sm">17.0 / 50 Marks</span>
+                    </div>
+                    <div class="w-28 sm:w-36 bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="scoreBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-300" style="width: 34%"></div>
+                    </div>
+                    <button onclick="resetProgress()" class="text-xs text-slate-400 hover:text-rose-400 px-2 py-1 rounded-lg hover:bg-slate-900 transition" title="Reset checkboxes">Reset</button>
+                </div>
+            </div>
+
+            <div class="mt-3 pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="chunkTabs">
+                    <button onclick="setChunkFilter('all')" data-tab="all" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white whitespace-nowrap">All Chunks (Full View)</button>
+                    <button onclick="setChunkFilter('chunk1')" data-tab="chunk1" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 1: U6 Part A (13%)</button>
+                    <button onclick="setChunkFilter('chunk2')" data-tab="chunk2" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 2: U6 Part B (13%)</button>
+                    <button onclick="setChunkFilter('chunk3')" data-tab="chunk3" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 3: Unit 8 (10%)</button>
+                    <button onclick="setChunkFilter('chunk4')" data-tab="chunk4" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 4: Unit 7 (8%)</button>
+                    <button onclick="setChunkFilter('chunk5')" data-tab="chunk5" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 5: Unit 10 (7%)</button>
+                    <button onclick="setChunkFilter('chunk6')" data-tab="chunk6" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap">Chunk 6: Unit 9 (5%)</button>
+                    <button onclick="setChunkFilter('chunk7')" data-tab="chunk7" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 whitespace-nowrap">Chunk 7: Extra Syllabus + Cheat Sheet</button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <select id="typeFilter" onchange="renderQuestions()" class="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                        <option value="all">All Types (Short + Long + Extra)</option>
+                        <option value="short">Short Questions Only</option>
+                        <option value="long">Long Questions Only</option>
+                        <option value="extra">Extra Syllabus Topics Only</option>
+                    </select>
+                    <input id="searchInput" oninput="renderQuestions()" type="text" placeholder="Search Nmap, VPN, OWASP, Q14..." class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-full sm:w-52">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+        <!-- Top Weightage & Strategy Summary -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        Official T2 Chapter Weightage (43% Total Syllabus = 50 Marks)
+                    </h2>
+                    <span class="text-xs text-slate-400">20 MCQ + 30 Descriptive Theory</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center">
+                    <div class="bg-slate-950 border border-emerald-500/40 rounded-xl p-3">
+                        <div class="text-xs font-semibold text-emerald-400">PRIORITY 1</div>
+                        <div class="text-sm font-bold text-white mt-0.5">Unit 6</div>
+                        <div class="text-lg font-extrabold text-emerald-300">13%</div>
+                        <div class="text-[11px] text-slate-400">~9 Theory Marks</div>
+                    </div>
+                    <div class="bg-slate-950 border border-teal-500/40 rounded-xl p-3">
+                        <div class="text-xs font-semibold text-teal-400">PRIORITY 2</div>
+                        <div class="text-sm font-bold text-white mt-0.5">Unit 8</div>
+                        <div class="text-lg font-extrabold text-teal-300">10%</div>
+                        <div class="text-[11px] text-slate-400">~7 Theory Marks</div>
+                    </div>
+                    <div class="bg-slate-950 border border-sky-500/40 rounded-xl p-3">
+                        <div class="text-xs font-semibold text-sky-400">PRIORITY 3</div>
+                        <div class="text-sm font-bold text-white mt-0.5">Unit 7</div>
+                        <div class="text-lg font-extrabold text-sky-300">8%</div>
+                        <div class="text-[11px] text-slate-400">~5.5 Theory Marks</div>
+                    </div>
+                    <div class="bg-slate-950 border border-indigo-500/40 rounded-xl p-3">
+                        <div class="text-xs font-semibold text-indigo-400">PRIORITY 4</div>
+                        <div class="text-sm font-bold text-white mt-0.5">Unit 10</div>
+                        <div class="text-lg font-extrabold text-indigo-300">7%</div>
+                        <div class="text-[11px] text-slate-400">~5 Theory Marks</div>
+                    </div>
+                    <div class="bg-slate-950 border border-purple-500/40 rounded-xl p-3 col-span-2 sm:col-span-1">
+                        <div class="text-xs font-semibold text-purple-400">PRIORITY 5</div>
+                        <div class="text-sm font-bold text-white mt-0.5">Unit 9</div>
+                        <div class="text-lg font-extrabold text-purple-300">5%</div>
+                        <div class="text-[11px] text-slate-400">~3.5 Theory Marks</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minimum Prep Strategy Card -->
+            <div class="bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-500/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-sm sm:text-base font-bold text-emerald-300">How You Easily Hit 35/50 Marks</h3>
+                    <ul class="mt-2.5 space-y-1.5 text-xs text-slate-300">
+                        <li>• <strong class="text-white">MCQs (20M):</strong> Direct from QB → <strong class="text-emerald-400">16–18 Marks</strong></li>
+                        <li>• <strong class="text-white">Units 6 + 8 + 7:</strong> Make up <strong class="text-emerald-400">72% of T2</strong> (~21.5 / 30 theory marks).</li>
+                        <li>• <strong class="text-white">4-in-1 Overlap Hack:</strong> Studying <em>OSINT, Sublist3r, Gobuster, WhatWeb, DNS & Nmap</em> once answers questions across Units 6, 7, 8, and 9!</li>
+                    </ul>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-emerald-500/20 flex items-center justify-between text-xs">
+                    <span class="text-slate-400">Click any question card to mark it read</span>
+                    <button onclick="markAllVisibleRead()" class="text-emerald-400 hover:underline font-semibold">Check All Visible</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- "Read At Least Once" Master Topic Checklist -->
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5">
+            <h2 class="text-sm sm:text-base font-bold text-white mb-3">📋 Topics That Need Your Attention (At Least Read Once)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="font-bold text-emerald-400 mb-1">Unit 6 (13% — Highest Priority)</div>
+                    <p class="text-slate-300">• <strong>OWASP Top 10:2021</strong> (All 10 names + 1-line fix)<br>• <strong>Active vs Passive</strong> Info Gathering<br>• <strong>Footprinting vs Recon</strong> table<br>• <strong>Social Engineering</strong> (Phishing, Pretexting, Baiting, Tailgating) + <strong>OSINT</strong> (Shodan, Maltego, Dorks)<br>• <strong>Scanning Types</strong> & <strong>Metasploit + Meterpreter</strong></p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="font-bold text-teal-400 mb-1">Unit 8 (10% — High Priority)</div>
+                    <p class="text-slate-300">• <strong>Wireshark:</strong> 3 Panes (List, Details, Bytes) & Capture vs Display filters<br>• <strong>OpenVAS:</strong> 5-step setup (<code>localhost:9392</code>) & 4 severities<br>• <strong>Web/OSINT Tools:</strong> Sublist3r, Gobuster, WhatWeb, Wappalyzer, Maltego, Shodan<br>• <strong>Firewall Detection:</strong> <code>nmap -O</code>, <code>-sS</code>, <code>-sW</code>, Banner grabbing</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="font-bold text-sky-400 mb-1">Unit 7 (8% — Medium Priority)</div>
+                    <p class="text-slate-300">• <strong>Gaining Access:</strong> CVEs, Phishing, Hydra brute-force, Default creds<br>• <strong>Privilege Escalation:</strong> Vertical (Kernel/Dirty COW, Buffer overflow, Sudo) vs Horizontal (IDOR, Session hijacking) & <strong>Mimikatz</strong><br>• <strong>Backdoors & 9 Malware Types</strong><br>• <strong>Nmap Flags</strong> & <strong>Whois / Mitaka / Dig / Fierce</strong></p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="font-bold text-indigo-400 mb-1">Unit 10 (7% — Easy Theory Marks)</div>
+                    <p class="text-slate-300">• <strong>How VPNs Work:</strong> Encryption, Tunneling (OpenVPN/IPsec), IP Masking<br>• <strong>3 VPN Types:</strong> Remote Access, Site-to-Site, SSL/TLS<br>• <strong>VPN vs TOR</strong> & Risks of Anonymity (False sense of security)<br>• <strong>Red Team (Offensive) vs Blue Team (Defensive)</strong><br>• <strong>Careers (CEH, OSCP) & Future Trends (AI, Cloud, IoT)</strong></p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="font-bold text-purple-400 mb-1">Unit 9 (5% — Overlaps w/ Unit 8)</div>
+                    <p class="text-slate-300">• <strong>Website Enumeration:</strong> Subdomain, DNS, Directory, Tech stack<br>• <strong>Injections:</strong> SQLi (<code>' OR 1=1--</code>), Command Injection (<code>; ls -al</code>), XSS (<code>&lt;script&gt;</code>)<br>• <strong>Defenses:</strong> Prepared statements, Input sanitization, WAF, Output encoding<br>• <strong>Burp Suite:</strong> Proxy, Repeater, Intruder, Scanner, Decoder</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-xl border border-amber-500/30">
+                    <div class="font-bold text-amber-400 mb-1">Why Did The Previous Output Look Cut Off?</div>
+                    <p class="text-slate-300">In the QB, <strong>Long Q11–Q14</strong> belong to <strong>Unit 10</strong> and <strong>Long Q6–Q10</strong> belong to <strong>Unit 9</strong>. Below, every single question is clearly numbered and we added <strong>Chunk 7</strong> for syllabus topics missing from the QB + a <strong>1-Page Command Cheat Sheet</strong>!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Questions Container -->
+        <div id="questionsContainer" class="space-y-8"></div>
+
+        <section id="cheatSheetSection" class="bg-slate-900 border border-amber-500/40 rounded-2xl p-4 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Last-Minute 5-Minute Revision</span>
+                    <h2 class="text-lg font-extrabold text-white">⚡ Master Command & Tool Cheat Sheet (Units 6–10)</h2>
+                </div>
+                <span class="text-xs text-slate-400">Memorize these exact 1-liners to boost any descriptive answer</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="border-b border-slate-800 text-slate-400 bg-slate-950/60">
+                            <th class="p-2.5 font-semibold">Tool / Concept</th>
+                            <th class="p-2.5 font-semibold">Exact Command / Filter / Payload</th>
+                            <th class="p-2.5 font-semibold">What It Does (1-Line Exam Answer)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/70 text-slate-200">
+                        <tr>
+                            <td class="p-2.5 font-semibold text-emerald-400">Nmap Ping Sweep</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sn 192.168.1.0/24</code></td>
+                            <td class="p-2.5">Discovers live/active hosts on a subnet without scanning ports.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-emerald-400">Nmap Stealth SYN Scan</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sS 192.168.1.1</code></td>
+                            <td class="p-2.5">Sends SYN without completing TCP handshake; evades basic IDS/firewalls.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-emerald-400">Nmap Version / OS / Aggr.</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sV</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -O</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -A</code></td>
+                            <td class="p-2.5"><code>-sV</code> = Service version, <code>-O</code> = OS & firewall detection, <code>-A</code> = Aggressive all-in-one.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-emerald-400">Nmap Firewall Scans</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sF</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sW</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">nmap -sA</code></td>
+                            <td class="p-2.5">FIN scan (<code>-sF</code>), TCP Window size scan (<code>-sW</code>), ACK firewall rule mapping (<code>-sA</code>).</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-teal-400">Wireshark Capture Filter</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">tcp port 80</code> or <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">ip host 192.168.1.1</code></td>
+                            <td class="p-2.5">Set <em>before</em> capture to record only specific port or host traffic.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-teal-400">Wireshark Display Filter</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">http</code> or <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">ip.addr == 192.168.1.5</code></td>
+                            <td class="p-2.5">Applied <em>after</em> capture to filter visible packets in the Packet List Pane.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-teal-400">OpenVAS Setup & URL</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">sudo apt-get install openvas && sudo openvas-setup</code></td>
+                            <td class="p-2.5">Web UI runs on <code>https://localhost:9392</code>; ranks Critical, High, Medium, Low.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-sky-400">Domain Enumeration</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">whois example.com</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">mitaka --domain example.com</code></td>
+                            <td class="p-2.5"><code>whois</code> = domain owner/registrar; <code>mitaka</code> = subdomains & A/MX/TXT records.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-sky-400">DNS & Subdomain Tools</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">dig example.com any</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">fierce --domain example.com</code></td>
+                            <td class="p-2.5">Queries DNS records (A, MX, NS) and discovers subdomains/DNS flaws.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-purple-400">Metasploit Workflow</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">msfconsole</code> → <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">search</code> → <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">use</code> → <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">set RHOSTS</code> → <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">run</code></td>
+                            <td class="p-2.5">Selects an exploit, attaches a payload (e.g., Meterpreter), and compromises target.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-semibold text-rose-400">SQLi / Cmd / XSS Payloads</td>
+                            <td class="p-2.5"><code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">' OR 1=1--</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">; ls -al</code> | <code class="bg-slate-950 px-2 py-0.5 rounded text-amber-300">&lt;script&gt;...&lt;/script&gt;</code></td>
+                            <td class="p-2.5">SQLi targets DB; Command Injection targets OS shell; XSS targets victim's browser.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const studyData = [
+            // =========================================================================
+            // CHUNK 1: UNIT 6 (PART A) - OWASP TOP 10, INFO GATHERING, RECON VS FOOTPRINTING
+            // =========================================================================
+            {
+                id: "c1-s1", chunk: "chunk1", chunkTitle: "Chunk 1: Unit 6 (Part A) — OWASP Top 10, Info Gathering & Recon vs. Footprinting",
+                weightage: "Part of 13% (Priority 1)", type: "short", qNum: "Unit 6 Short Q1",
+                question: "What is the OWASP Top 10?",
+                answer: [
+                    "The OWASP Top 10 is a regularly updated awareness report prepared by global security experts outlining the <strong>10 most critical security risks for web applications</strong>.",
+                    "Companies incorporate it into their development processes to minimize and mitigate web security risks."
+                ]
+            },
+            {
+                id: "c1-s2", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q2",
+                question: "What does A01:2021 - Broken Access Control refer to?",
+                answer: [
+                    "It occurs when restrictions on authenticated users are not properly enforced, allowing users to act outside their intended permissions.",
+                    "It leads to unauthorized viewing, modification, or deletion of data (e.g., URL tampering, force browsing, IDOR, or elevating from user to admin)."
+                ]
+            },
+            {
+                id: "c1-s3", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q3",
+                question: "What is the difference between active and passive information gathering?",
+                answer: [
+                    "<strong>Active Information Gathering:</strong> Directly interacts with the target system by sending requests/probes (can be detected by target logs/IDS; e.g., Nmap scanning).",
+                    "<strong>Passive Information Gathering:</strong> Collects data from publicly available sources without touching the target system (undetectable; e.g., WHOIS, social media mining)."
+                ]
+            },
+            {
+                id: "c1-s4", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q4",
+                question: "Which tools can be used for network scanning in active information gathering?",
+                answer: [
+                    "<strong>Nmap</strong>, <strong>Netcat</strong>, and <strong>Angry IP Scanner</strong> (used to discover live devices, open ports, and running services)."
+                ]
+            },
+            {
+                id: "c1-s5", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q5",
+                question: "What is the purpose of a Ping Sweep?",
+                answer: [
+                    "A Ping Sweep (ICMP sweep) sends ICMP echo requests to a range of IP addresses to <strong>identify live (active) hosts</strong> in a network."
+                ]
+            },
+            {
+                id: "c1-s6", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q6",
+                question: "What is the role of social media in passive information gathering?",
+                answer: [
+                    "Platforms like LinkedIn, Facebook, and Twitter reveal employee names, job roles, organizational structure, and technical stacks without directly interacting with the target."
+                ]
+            },
+            {
+                id: "c1-s9", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q9",
+                question: "What does the technique of banner grabbing reveal about a target?",
+                answer: [
+                    "It reveals the <strong>software name, exact version number, and configuration</strong> of a service running on an open port (e.g., web or FTP server) using tools like Netcat, Telnet, or Nmap."
+                ]
+            },
+            {
+                id: "c1-s11", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q11",
+                question: "What are Google Dorks used for in information gathering?",
+                answer: [
+                    "Google Dorks use advanced search operators (like <code>site:</code>, <code>filetype:</code>, <code>inurl:</code>) to find sensitive documents, internal reports, or exposed files unintentionally indexed by search engines."
+                ]
+            },
+            {
+                id: "c1-s12", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q12",
+                question: "What is the significance of public data sources in passive information gathering?",
+                answer: [
+                    "Company websites, blogs, news articles, and public databases provide free insights into an organization's structure, technology stack, and security posture with zero risk of detection."
+                ]
+            },
+            {
+                id: "c1-s13", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q13",
+                question: "What is the main difference between Recon and Footprinting in cybersecurity?",
+                answer: [
+                    "<strong>Footprinting:</strong> The initial, primarily <em>passive</em> phase that maps high-level public info (domains, IP ranges, WHOIS).",
+                    "<strong>Reconnaissance (Recon):</strong> The broader process involving <em>both active and passive</em> techniques to find detailed system vulnerabilities and attack vectors."
+                ]
+            },
+            {
+                id: "c1-s14", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q14",
+                question: "What is the primary goal of Footprinting?",
+                answer: [
+                    "To gather general, high-level public information (network ranges, DNS details, domain names) to build a blueprint of the target's infrastructure while staying undetected."
+                ]
+            },
+            {
+                id: "c1-s15", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q15",
+                question: "Define Reconnaissance in cybersecurity.",
+                answer: [
+                    "Reconnaissance is a broad process of gathering detailed intelligence about a target's systems, networks, and weaknesses using both active (scanning) and passive (OSINT) methods before an attack."
+                ]
+            },
+            {
+                id: "c1-s16", chunk: "chunk1", type: "short", qNum: "Unit 6 Short Q16",
+                question: "What is the technique of banner grabbing used for in Recon?",
+                answer: [
+                    "In active recon, banner grabbing sends requests to running services (like web or mail servers) to identify their software versions so attackers can find matching CVEs/exploits."
+                ]
+            },
+            {
+                id: "c1-l1", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q1",
+                question: "What is the OWASP Top 10, and how can organizations use it to improve web application security? Explain each of the 10 risks mentioned in the report.",
+                answer: [
+                    "<strong>How Organizations Use It:</strong> Used as an industry baseline checklist across the SDLC to design, audit, and remediate critical web security flaws.",
+                    "<strong>1. A01:2021 Broken Access Control:</strong> Users act outside permissions (IDOR, URL force browsing). <em>Fix:</em> Deny by default; enforce server-side access checks.",
+                    "<strong>2. A02:2021 Cryptographic Failures:</strong> Cleartext transmission (HTTP/FTP) or weak ciphers (MD5/SHA1) exposing sensitive data. <em>Fix:</em> Use TLS/HSTS and strong encryption.",
+                    "<strong>3. A03:2021 Injection:</strong> Untrusted input concatenated into SQL/OS/LDAP queries. <em>Fix:</em> Parameterized queries (prepared statements) & input validation.",
+                    "<strong>4. A04:2021 Insecure Design:</strong> Missing security architecture or business logic controls during design. <em>Fix:</em> Threat modeling & secure design patterns.",
+                    "<strong>5. A05:2021 Security Misconfiguration:</strong> Default passwords, directory listing enabled, verbose error stack traces. <em>Fix:</em> Automated hardening & disable unused features.",
+                    "<strong>6. A06:2021 Vulnerable and Outdated Components:</strong> Using unpatched OS, CMS, or libraries with known CVEs. <em>Fix:</em> Inventory versions (OWASP Dependency Check) & patch timely.",
+                    "<strong>7. A07:2021 Identification and Authentication Failures:</strong> Weak passwords, credential stuffing, or uninvalidated session IDs. <em>Fix:</em> Enforce MFA & secure session management.",
+                    "<strong>8. A08:2021 Software and Data Integrity Failures:</strong> Unsigned firmware/updates, untrusted CI/CD, insecure deserialization (e.g., SolarWinds). <em>Fix:</em> Digital signatures.",
+                    "<strong>9. A09:2021 Security Logging and Monitoring Failures:</strong> Unlogged logins/breaches delay detection. <em>Fix:</em> Centralize audit logs in a SIEM with active alerts.",
+                    "<strong>10. A10:2021 Server-Side Request Forgery (SSRF):</strong> App fetches unvalidated user URL, exposing internal services. <em>Fix:</em> Positive URL allowlists & network segmentation."
+                ]
+            },
+            {
+                id: "c1-l2", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q2",
+                question: "Describe the process of information gathering in cybersecurity. Explain the differences between active and passive information gathering techniques and provide examples of tools used in each.",
+                answer: [
+                    "<strong>Process:</strong> The systematic collection of intelligence about a target's network, hosts, employees, and weaknesses prior to exploitation.",
+                    "<strong>Active Information Gathering:</strong> Directly probes target systems; provides accurate technical details but leaves logs and risks triggering IDS/firewalls. <em>Tools:</em> <strong>Nmap, Netcat, Angry IP Scanner, Nessus, OpenVAS</strong>.",
+                    "<strong>Passive Information Gathering:</strong> Collects data from public sources with zero direct contact with the target; completely undetectable. <em>Tools:</em> <strong>WHOIS Lookup, Shodan, Maltego, Google Dorks, Recon-ng</strong>."
+                ]
+            },
+            {
+                id: "c1-l3", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q3",
+                question: "What are some common tools and techniques used in active information gathering, and how do they help attackers or ethical hackers understand the target's infrastructure?",
+                answer: [
+                    "<strong>Network Scanning (Nmap, Angry IP Scanner):</strong> Discovers active devices, open ports, and running services.",
+                    "<strong>Ping Sweep (ping, fping):</strong> Sends ICMP requests across a subnet to see which hosts are online.",
+                    "<strong>DNS Interrogation (dig, nslookup):</strong> Directly queries DNS servers for subdomains and mail/name servers.",
+                    "<strong>Traceroute:</strong> Maps every router hop and gateway between the tester and target to reveal network topology.",
+                    "<strong>Banner Grabbing (Netcat, Telnet) & OS Fingerprinting (Nmap, Xprobe):</strong> Identifies exact service versions and operating systems to find matching CVE exploits."
+                ]
+            },
+            {
+                id: "c1-l4", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q4",
+                question: "How does passive information gathering differ from active information gathering in terms of detection and effectiveness? Discuss the various methods used in passive information gathering.",
+                answer: [
+                    "<strong>Detection vs. Effectiveness:</strong> Passive gathering has <strong>zero detection risk</strong> because no packets are sent to the target, making it ideal for initial profiling; Active gathering yields deeper vulnerability data but has a <strong>high risk of alerting defenders</strong>.",
+                    "<strong>Passive Methods:</strong>",
+                    "• <strong>WHOIS Queries:</strong> Finds domain owner, registrar, email contacts, and IP ranges.",
+                    "• <strong>Public DNS Enumeration:</strong> Examines A, MX, NS, and TXT records via public databases.",
+                    "• <strong>Social Media Mining:</strong> Extracts employee roles and tech stacks from LinkedIn/Twitter.",
+                    "• <strong>OSINT & Google Dorking:</strong> Uses Maltego, Shodan, and search operators (<code>filetype:pdf</code>) to find exposed assets."
+                ]
+            },
+            {
+                id: "c1-l7", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q7",
+                question: "What is the importance of reconnaissance, including both physical and digital aspects, in gathering information about a target? How can attackers use this information to plan their next steps?",
+                answer: [
+                    "<strong>Digital Reconnaissance:</strong> Maps IP blocks, subdomains, open ports, OS types, and unpatched software versions.",
+                    "<strong>Physical Reconnaissance:</strong> Observes building entry points, badge-access habits (for tailgating), cameras, and exposed documents/USB drops.",
+                    "<strong>Planning Next Steps:</strong> Attackers correlate this data to choose the path of least resistance—either launching precise exploits against discovered software versions or targeting specific employees with tailored spear-phishing/pretexting."
+                ]
+            },
+            {
+                id: "c1-l8", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q8",
+                question: "How can organizations defend themselves against the various information-gathering techniques described above, especially when the techniques involve gathering publicly available information?",
+                answer: [
+                    "<strong>1. Reduce Public Footprint:</strong> Enable WHOIS domain privacy and restrict sensitive technical/employee info posted on public websites and job listings.",
+                    "<strong>2. Prevent Search Indexing:</strong> Remove confidential documents from public folders and secure sensitive directories against Google Dorking.",
+                    "<strong>3. Harden Network & DNS:</strong> Restrict DNS zone transfers, hide/obfuscate server version banners, close unused ports, and deploy Firewalls/IDS to block active scans.",
+                    "<strong>4. Employee Awareness Training:</strong> Train employees on social media hygiene and recognizing phishing/pretexting."
+                ]
+            },
+            {
+                id: "c1-l9", chunk: "chunk1", type: "long", qNum: "Unit 6 Long Q9",
+                question: "Explain the difference between Recon and Footprinting in the context of cybersecurity. What techniques are involved in each, and how do their goals differ?",
+                answer: [
+                    "<strong>Definition & Method:</strong> Footprinting is the initial phase using <em>primarily passive</em> methods; Reconnaissance is the broader phase using <em>both passive and active</em> methods.",
+                    "<strong>Goals:</strong> Footprinting aims to create a high-level map of the target's public infrastructure (domains, IP ranges); Recon aims to deeply explore systems to uncover specific vulnerabilities and attack vectors.",
+                    "<strong>Techniques & Tools:</strong> Footprinting uses WHOIS lookups, public DNS queries, Google Dorking, and social media mining (Low detection risk); Recon adds Nmap port scanning, banner grabbing, OS fingerprinting, and vulnerability scanning (Higher detection risk)."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 2: UNIT 6 (PART B) - SOCIAL ENGINEERING, OSINT, SCANNING & METASPLOIT
+            // =========================================================================
+            {
+                id: "c2-s8", chunk: "chunk2", chunkTitle: "Chunk 2: Unit 6 (Part B) — Social Engineering, OSINT, Scanning & Metasploit",
+                weightage: "Part of 13% (Priority 1)", type: "short", qNum: "Unit 6 Short Q8",
+                question: "What is the main difference between a vulnerability scan and an OS fingerprinting?",
+                answer: [
+                    "<strong>Vulnerability Scan:</strong> Automated scan (using Nessus/OpenVAS) to find known security weaknesses, missing patches, and misconfigurations.",
+                    "<strong>OS Fingerprinting:</strong> Analyzes network packet responses (using Nmap <code>-O</code> or Xprobe2) to determine the <strong>operating system</strong> running on a target device."
+                ]
+            },
+            {
+                id: "c2-s10", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q10",
+                question: "How does social engineering help attackers collect sensitive information?",
+                answer: [
+                    "It manipulates human emotions (fear, urgency, trust) to trick employees into willingly handing over passwords or confidential data, bypassing technical security controls."
+                ]
+            },
+            {
+                id: "c2-s17", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q17",
+                question: "What is Social Engineering in hacking?",
+                answer: [
+                    "Social engineering is the art of psychologically manipulating people into revealing confidential information or performing actions that compromise security."
+                ]
+            },
+            {
+                id: "c2-s18", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q18",
+                question: "Name two common techniques used in Social Engineering.",
+                answer: [
+                    "<strong>1. Phishing / Spear Phishing</strong> (sending fraudulent emails posing as trusted sources).",
+                    "<strong>2. Pretexting</strong> (creating a fabricated scenario, like posing as IT support, to extract passwords). <em>(Others: Baiting, Tailgating)</em>."
+                ]
+            },
+            {
+                id: "c2-s19", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q19",
+                question: "What does OSINT stand for?",
+                answer: [
+                    "<strong>Open Source Intelligence</strong> — collecting and analyzing information from publicly available sources."
+                ]
+            },
+            {
+                id: "c2-s20", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q20",
+                question: "What is the use of Google Dorking in OSINT?",
+                answer: [
+                    "It uses advanced search operators (e.g., <code>site:company.com filetype:pdf</code>) to locate sensitive files, internal reports, or exposed pages indexed by Google."
+                ]
+            },
+            {
+                id: "c2-s21", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q21",
+                question: "What is the purpose of Shodan in OSINT?",
+                answer: [
+                    "Shodan is a search engine for <strong>internet-connected devices</strong> (routers, webcams, servers, IoT) used to find exposed devices, open ports, and vulnerable services."
+                ]
+            },
+            {
+                id: "c2-s22", chunk: "chunk2", type: "short", qNum: "Unit 6 Short Q22",
+                question: "What is the purpose of the Metasploit Framework in penetration testing?",
+                answer: [
+                    "Metasploit is an open-source framework used to <strong>identify, exploit, and validate vulnerabilities</strong>, deliver payloads (like Meterpreter), and test security defenses."
+                ]
+            },
+            {
+                id: "c2-l5", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q5",
+                question: "Explain the role of social engineering in information gathering. What are some examples of social engineering techniques, and how do they contribute to a hacker's ability to exploit vulnerabilities?",
+                answer: [
+                    "<strong>Role:</strong> Bypasses firewalls and encryption by targeting human psychology (trust, urgency, fear) to gather credentials and internal system details.",
+                    "<strong>Examples of Techniques:</strong>",
+                    "• <strong>Phishing & Spear Phishing:</strong> Fake emails from banks/HR/CEOs tricking users into clicking malicious links or giving up logins.",
+                    "• <strong>Pretexting:</strong> Posing as an IT technician needing a user's password to fix an urgent issue.",
+                    "• <strong>Baiting:</strong> Dropping infected USB drives labeled 'Bonuses' in office lobbies.",
+                    "• <strong>Tailgating:</strong> Following an employee through a physical badge-access door.",
+                    "<strong>Contribution:</strong> Gives attackers valid credentials and internal network knowledge to directly access systems."
+                ]
+            },
+            {
+                id: "c2-l6", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q6",
+                question: "How can open-source intelligence (OSINT) be utilized during the information gathering phase of a cybersecurity attack? What are some specific tools used for OSINT?",
+                answer: [
+                    "<strong>How OSINT is Utilized:</strong> Passively collects public data from social media, WHOIS, DNS records, and public datasets to profile employees and map technical infrastructure without alerting the target.",
+                    "<strong>Specific OSINT Tools:</strong>",
+                    "• <strong>Shodan:</strong> Finds internet-exposed routers, webcams, and servers with open ports.",
+                    "• <strong>Maltego:</strong> Creates visual link-analysis graphs connecting people, domains, and IPs.",
+                    "• <strong>theHarvester & Recon-ng:</strong> Aggregates emails, subdomains, and hosts from public search engines.",
+                    "• <strong>Google Dorking & WHOIS:</strong> Uncovers indexed confidential PDFs and domain owner details."
+                ]
+            },
+            {
+                id: "c2-l10", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q10",
+                question: "How does Social Engineering exploit human vulnerabilities, and what are some common techniques used in Social Engineering attacks? Provide examples.",
+                answer: [
+                    "<strong>Exploiting Human Vulnerabilities:</strong> Manipulates emotions like <strong>fear, urgency, authority, and trust</strong> (e.g., an email impersonating the CEO demanding an urgent wire transfer).",
+                    "<strong>Common Techniques & Examples:</strong>",
+                    "• <strong>Phishing / Spear Phishing:</strong> Targeted fake emails tailored to a specific employee.",
+                    "• <strong>Pretexting:</strong> Fabricating a story (e.g., posing as IT support or a vendor) to extract passwords.",
+                    "• <strong>Baiting:</strong> Leaving a malware-laden USB labeled 'Confidential' in a coffee shop or office.",
+                    "• <strong>Impersonation & Tailgating:</strong> Pretending to be a coworker or physically following staff into a secure building.",
+                    "• <strong>Quizzes/Surveys:</strong> Fake online surveys designed to collect password security question answers."
+                ]
+            },
+            {
+                id: "c2-l11", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q11",
+                question: "Describe the role of Open Source Intelligence (OSINT) in hacking. How is it used in conjunction with Social Engineering, and what tools are commonly used to gather OSINT?",
+                answer: [
+                    "<strong>Role in Hacking:</strong> Builds a complete profile of the target organization and its employees from free, legal public sources before any attack begins.",
+                    "<strong>Used with Social Engineering:</strong> Attackers use OSINT (e.g., LinkedIn, Twitter) to learn an employee's job title, boss's name, and interests, making subsequent spear-phishing or pretexting phone calls highly believable.",
+                    "<strong>Common Tools:</strong> <strong>Maltego</strong> (link analysis), <strong>Recon-ng</strong>, <strong>theHarvester</strong>, <strong>SpiderFoot</strong>, <strong>Shodan</strong>, <strong>WHOIS</strong>, and <strong>Google Dorks</strong>."
+                ]
+            },
+            {
+                id: "c2-l12", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q12",
+                question: "What are the different types of scanning used in cybersecurity, and how do they help identify vulnerabilities in a target system? Discuss network scanning, vulnerability scanning, and OS scanning.",
+                answer: [
+                    "<strong>1. Network Scanning:</strong> Maps the network by finding active devices (IP scanning / Ping sweep) and open ports (Port scanning: SYN, TCP Connect, FIN, Xmas, ACK).",
+                    "<strong>2. Service Scanning:</strong> Uses banner grabbing on open ports to identify running software and exact version numbers.",
+                    "<strong>3. OS Scanning (Fingerprinting):</strong> Analyzes TCP/IP responses (via Nmap <code>-O</code> or Xprobe2) to determine the target OS so OS-specific exploits can be chosen.",
+                    "<strong>4. Vulnerability & Security Scanning:</strong> Uses automated scanners (Nessus, OpenVAS, Burp Suite) to check for unpatched CVEs, weak passwords, and misconfigurations."
+                ]
+            },
+            {
+                id: "c2-l13", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q13",
+                question: "Discuss the tools commonly used in scanning networks and systems. Include Nmap, Masscan, Nessus, and Shodan, explaining their specific capabilities and use cases.",
+                answer: [
+                    "<strong>Nmap (Network Mapper):</strong> Used for host discovery, port scanning, OS detection, service version detection, and NSE scripting (<code>nmap -sS -T4 -A -v 192.168.1.1</code>).",
+                    "<strong>Masscan:</strong> High-speed, high-throughput port scanner capable of scanning large networks or the entire internet in minutes (<code>masscan 192.168.0.0/24 -p 0-65535</code>).",
+                    "<strong>Nessus:</strong> Automated vulnerability scanner that checks systems and networks for missing patches, CVEs, and misconfigurations, generating audit reports.",
+                    "<strong>Shodan:</strong> Search engine for internet-connected devices (routers, webcams, ICS) that identifies exposed services and vulnerabilities (<code>hostname:example.com</code>)."
+                ]
+            },
+            {
+                id: "c2-l14", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q14",
+                question: "What is the significance of banner grabbing and OS fingerprinting in Reconnaissance? How do these techniques help in identifying vulnerabilities within a target system?",
+                answer: [
+                    "<strong>Banner Grabbing:</strong> Connects to open ports (using Netcat <code>nc -v -n IP 80</code>, Telnet, or Nmap) to read service banners containing software names and version numbers.",
+                    "<strong>OS Fingerprinting:</strong> Analyzes TCP/IP packet responses (using Nmap <code>-O</code>, Xprobe2, p0f) to identify the remote operating system.",
+                    "<strong>How They Identify Vulnerabilities:</strong> Exploits are version- and OS-specific; knowing the exact OS (e.g., Windows Server) and service version (e.g., Apache 2.4.x) lets testers look up exact CVEs in ExploitDB."
+                ]
+            },
+            {
+                id: "c2-l15", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q15",
+                question: "How does a hacker use OSINT to craft a social engineering attack? Provide an example of a real-life situation where OSINT might be used to gain unauthorized access to a system or organization.",
+                answer: [
+                    "<strong>Process:</strong> The hacker first performs passive OSINT on social media and company sites to gather employee names, roles, emails, and current projects.",
+                    "<strong>Real-Life Example:</strong> An attacker mines <strong>LinkedIn</strong> to find an IT/Finance employee at a company, discovers what software stack they use, and sends a tailored <strong>spear-phishing email</strong> posing as their manager or IT vendor asking them to log into a cloned VPN portal, capturing their credentials for unauthorized access."
+                ]
+            },
+            {
+                id: "c2-l16", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q16",
+                question: "Discuss the various techniques used in vulnerability scanning. How do tools like Nessus and OpenVAS identify weaknesses in systems, and what types of vulnerabilities do they target?",
+                answer: [
+                    "<strong>How Nessus & OpenVAS Work:</strong> They probe open ports and services against a continuously updated database of thousands of vulnerability signatures / Network Vulnerability Tests (NVTs) and rank findings by severity.",
+                    "<strong>Vulnerabilities Targeted:</strong>",
+                    "• Outdated software versions and missing OS security patches (known CVEs).",
+                    "• Default or weak credentials (e.g., <code>admin/admin</code>).",
+                    "• Server/cloud misconfigurations and unnecessary open ports.",
+                    "• Web application flaws like SQL injection and XSS."
+                ]
+            },
+            {
+                id: "c2-l17", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q17",
+                question: "Explain the importance of security scanning in the process of network defense. How does security scanning help in detecting open ports, weak passwords, and misconfigurations?",
+                answer: [
+                    "<strong>Importance:</strong> Proactively discovers weaknesses before malicious hackers can exploit them and verifies compliance with security policies.",
+                    "<strong>How It Detects Issues:</strong>",
+                    "• <strong>Open Ports:</strong> Port scanners (Nmap) identify unnecessary listening ports so admins can close them.",
+                    "• <strong>Weak Passwords:</strong> Automated audit scripts test for default logins and weak passwords.",
+                    "• <strong>Misconfigurations:</strong> Scanners (OpenVAS/Nessus) flag exposed directories, unencrypted protocols, and overly permissive access settings."
+                ]
+            },
+            {
+                id: "c2-l18", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q18",
+                question: "How do tools like Burp Suite and Wireshark assist in scanning web applications and network protocols? Discuss their specific features and capabilities in vulnerability assessment.",
+                answer: [
+                    "<strong>Burp Suite (Web App Security):</strong>",
+                    "• Acts as an intercepting proxy between browser and server.",
+                    "• <em>Capabilities:</em> Spidering web endpoints, automated scanning for SQLi and XSS (Scanner), fuzzing inputs with payloads (Intruder), and manually modifying HTTP requests (Repeater).",
+                    "<strong>Wireshark (Network Protocol Analyzer):</strong>",
+                    "• Captures real-time packets from network interfaces and decodes 2,000+ protocols.",
+                    "• <em>Capabilities:</em> Deep packet inspection, Capture/Display filtering, detecting cleartext credentials (HTTP/FTP), port scans, and MitM/ARP poisoning."
+                ]
+            },
+            {
+                id: "c2-l19", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q19",
+                question: "What is the Metasploit Framework, and how has it evolved since its initial development in 2003? Explain its core components and the purpose they serve in penetration testing and vulnerability assessment.",
+                answer: [
+                    "<strong>Evolution:</strong> Created by H.D. Moore in 2003 (now maintained by Rapid7), it grew from a portable exploit collection into a cross-platform penetration testing platform that integrates with Nmap, Nessus, and Burp Suite.",
+                    "<strong>Core Components:</strong>",
+                    "• <strong>msfconsole & Web GUI:</strong> Main CLI (<code>msfconsole</code>) and graphical interface to search, configure (<code>set RHOSTS</code>), and launch exploits (<code>run</code>).",
+                    "• <strong>Exploit Modules:</strong> Code that exploits a specific CVE (e.g., <code>exploit/windows/smb/ms17_010_eternalblue</code>).",
+                    "• <strong>Payload Modules:</strong> Code executed on the target after exploitation (e.g., reverse shells, Meterpreter).",
+                    "• <strong>Auxiliary Modules:</strong> Non-exploit tools for scanning, fuzzing, sniffing, and brute-forcing.",
+                    "• <strong>Post-Exploitation Modules & Database:</strong> Used after compromise to dump hashes, escalate privileges, and store scan/session results."
+                ]
+            },
+            {
+                id: "c2-l20", chunk: "chunk2", type: "long", qNum: "Unit 6 Long Q20",
+                question: "Describe the use of the Meterpreter payload in Metasploit. What are its advantages and key features, and how does it assist attackers in post-exploitation activities on compromised systems?",
+                answer: [
+                    "<strong>What It Is & Key Advantage:</strong> Meterpreter is an advanced interactive payload shell that <strong>runs entirely in memory (RAM)</strong> without writing files to disk, evading signature-based antivirus.",
+                    "<strong>Post-Exploitation Features:</strong>",
+                    "• File system navigation, uploading, and downloading files.",
+                    "• Privilege escalation and extracting password hashes (<code>hashdump</code>).",
+                    "• Keystroke logging, capturing screenshots, and accessing the webcam.",
+                    "• Maintaining persistence and pivoting to other systems on the internal network."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 3: UNIT 8 - WIRESHARK, OPENVAS, WEB ENUMERATION & FIREWALL DETECTION
+            // =========================================================================
+            {
+                id: "c3-s1", chunk: "chunk3", chunkTitle: "Chunk 3: Unit 8 — Wireshark, OpenVAS, Web/OSINT Tools & Firewall Identification",
+                weightage: "10% Weightage (Priority 2)", type: "short", qNum: "Unit 8 Short Q1",
+                question: "Explain how Wireshark captures network traffic in real-time.",
+                answer: [
+                    "Wireshark captures traffic in real-time by tapping into the system's network interfaces (Ethernet, Wi-Fi) in <strong>promiscuous mode</strong> and decoding raw packets across over 2,000 protocols."
+                ]
+            },
+            {
+                id: "c3-s2", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q2",
+                question: "What is the purpose of the Packet List Pane in the Wireshark interface?",
+                answer: [
+                    "It displays a one-line summary of every captured packet, including its <strong>timestamp, source IP, destination IP, protocol, length, and brief info</strong>."
+                ]
+            },
+            {
+                id: "c3-s3", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q3",
+                question: "Describe the difference between Capture Filters and Display Filters in Wireshark.",
+                answer: [
+                    "<strong>Capture Filters:</strong> Set <em>before</em> capturing data to limit which packets are recorded (e.g., <code>ip host 192.168.1.1</code> or <code>tcp port 80</code>).",
+                    "<strong>Display Filters:</strong> Applied <em>after</em> capture to search or filter visible packets without deleting other captured packets (e.g., <code>http</code> or <code>ip.addr == 192.168.1.5</code>)."
+                ]
+            },
+            {
+                id: "c3-s4", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q4",
+                question: "What is OpenVAS, and what is its primary use in cybersecurity?",
+                answer: [
+                    "OpenVAS (Open Vulnerability Assessment System) is a comprehensive open-source <strong>vulnerability scanning tool</strong> used to identify security weaknesses in networks, operating systems, and applications."
+                ]
+            },
+            {
+                id: "c3-s5", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q5",
+                question: "How does OpenVAS categorize vulnerabilities in its reports?",
+                answer: [
+                    "It categorizes identified vulnerabilities by severity level: <strong>Critical, High, Medium, and Low</strong>."
+                ]
+            },
+            {
+                id: "c3-s6", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q6",
+                question: "Explain the steps involved in setting up OpenVAS on a Linux-based system.",
+                answer: [
+                    "<strong>1. Install:</strong> Run <code>sudo apt-get install openvas</code> and <code>sudo openvas-setup</code>.",
+                    "<strong>2. Configure:</strong> Start the Greenbone Vulnerability Manager (GVM) service and open the web interface at <code>https://localhost:9392</code>.",
+                    "<strong>3. Scan & Analyze:</strong> Create a scan target (IP/domain), run the scan, and analyze the severity report."
+                ]
+            },
+            {
+                id: "c3-s7", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q7",
+                question: "What are subdomain enumeration tools, and how do they assist in website enumeration?",
+                answer: [
+                    "Tools like <strong>Sublist3r, Gobuster, and dnsdumpster</strong> discover hidden or linked subdomains (e.g., <code>admin.example.com</code>) that expand the target's attack surface."
+                ]
+            },
+            {
+                id: "c3-s8", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q8",
+                question: "Describe the role of OSINT tools like Shodan in gathering intelligence.",
+                answer: [
+                    "Shodan acts as a search engine for internet-connected devices (webcams, routers, ICS), helping testers passively find exposed devices and vulnerable services."
+                ]
+            },
+            {
+                id: "c3-s9", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q9",
+                question: "What is the significance of a SYN scan in Nmap for firewall detection?",
+                answer: [
+                    "A SYN scan (<code>nmap -sS &lt;target_IP&gt;</code>) sends half-open SYN packets without completing the TCP handshake, helping evade detection by simple firewalls and revealing filtered vs. open ports."
+                ]
+            },
+            {
+                id: "c3-s10", chunk: "chunk3", type: "short", qNum: "Unit 8 Short Q10",
+                question: "How does banner grabbing help identify firewalls, and which tools can be used for this technique?",
+                answer: [
+                    "Certain firewalls return identifying text banners revealing the firewall vendor/model (e.g., 'Cisco ASA' or 'pfSense'). <strong>Tools used:</strong> <code>Telnet</code>, <code>Netcat</code>, or <code>Nmap</code>."
+                ]
+            },
+            {
+                id: "c3-l1", chunk: "chunk3", type: "long", qNum: "Unit 8 Long Q1",
+                question: "Explain the main features of Wireshark, including its packet capture process, protocol decoding, and data representation. How do these features contribute to its effectiveness as a network protocol analyzer?",
+                answer: [
+                    "<strong>1. Packet Capture:</strong> Captures live network traffic in real-time by tapping into Ethernet/Wi-Fi interfaces in promiscuous mode.",
+                    "<strong>2. Protocol Decoding:</strong> Decodes over 2,000 network protocols (HTTP, FTP, DNS, TCP/IP).",
+                    "<strong>3. Data Representation (3 Panes):</strong>",
+                    "• <em>Packet List Pane:</em> Summary of packets (timestamp, source/dest IP, protocol).",
+                    "• <em>Packet Details Pane:</em> Expandable tree showing protocol layers (Ethernet → IP → TCP → HTTP).",
+                    "• <em>Packet Bytes Pane:</em> Raw hexadecimal and ASCII values.",
+                    "<strong>Effectiveness:</strong> With Capture Filters (<code>tcp port 80</code>) and Display Filters (<code>http</code>), it enables fast network troubleshooting, TCP handshake analysis, and detection of MitM attacks, port scans, and session hijacking."
+                ]
+            },
+            {
+                id: "c3-l2", chunk: "chunk3", type: "long", qNum: "Unit 8 Long Q2",
+                question: "Describe the process of setting up OpenVAS, from installation to scanning targets. Include the key steps involved in configuring the tool, running a scan, and analyzing the results for vulnerabilities.",
+                answer: [
+                    "<strong>1. Install OpenVAS:</strong> On Kali Linux, run <code>sudo apt-get install openvas</code> and <code>sudo openvas-setup</code>.",
+                    "<strong>2. Configure OpenVAS:</strong> Start the Greenbone Vulnerability Manager (GVM) service and open the web UI at <code>https://localhost:9392</code>.",
+                    "<strong>3. Create a Scan Target:</strong> Specify the target IP addresses, domains, or subnets to assess.",
+                    "<strong>4. Run the Scan:</strong> Initiate the scan to probe for outdated software, misconfigurations, and exposed services.",
+                    "<strong>5. Analyze Results:</strong> Review the detailed report categorized by severity (<strong>Critical, High, Medium, Low</strong>) along with vulnerability descriptions and remediation steps."
+                ]
+            },
+            {
+                id: "c3-l3", chunk: "chunk3", type: "long", qNum: "Unit 8 Long Q3",
+                question: "What are the common techniques used in website enumeration? Explain the use of tools such as Sublist3r, Gobuster, and WhatWeb in identifying subdomains, directory structures, and web technologies. How do these techniques aid in security testing and reconnaissance?",
+                answer: [
+                    "<strong>1. Subdomain Enumeration (Sublist3r, Gobuster, dnsdumpster):</strong> Discovers linked subdomains (e.g., <code>dev.target.com</code>) that may have weaker security.",
+                    "<strong>2. Directory & File Enumeration (Gobuster, DirBuster):</strong> Brute-forces hidden directories, admin panels, and backup files using wordlists.",
+                    "<strong>3. Technology Identification (WhatWeb, Wappalyzer):</strong> Identifies the CMS (WordPress), web server (Apache), and JS libraries.",
+                    "<strong>4. DNS Enumeration (Fierce, dnsrecon, dnsenum):</strong> Queries MX, NS, and A records.",
+                    "<strong>How It Aids Testing:</strong> Maps the full attack surface and tells pentesters exact software versions so they can look up matching CVEs."
+                ]
+            },
+            {
+                id: "c3-l4", chunk: "chunk3", type: "long", qNum: "Unit 8 Long Q4",
+                question: "Discuss the importance of firewall identification in network security. Include an explanation of methods such as network scanning with Nmap, TCP/IP fingerprinting, stealth scans, and banner grabbing. How do these methods help in detecting and bypassing firewalls during penetration testing?",
+                answer: [
+                    "<strong>Importance:</strong> Helps pentesters understand traffic filtering rules, audit access control policies, and craft firewall evasion strategies.",
+                    "<strong>Detection Methods:</strong>",
+                    "• <strong>Network Scanning with Nmap:</strong> Probes TCP/UDP ports (e.g., 80, 443) to see if responses are blocked/filtered.",
+                    "• <strong>TCP/IP Fingerprinting (<code>nmap -O &lt;target_IP&gt;</code>):</strong> Infers OS and firewall type from TCP/IP stack characteristics.",
+                    "• <strong>Stealth Scans (<code>nmap -sS</code>, <code>nmap -sF</code>) & Window Scan (<code>nmap -sW</code>):</strong> Sends unusual SYN/FIN packets to evade simple firewalls and checks TCP window size modifications.",
+                    "• <strong>Banner Grabbing (Telnet, Netcat, Nmap):</strong> Captures banners revealing firewall vendors like 'Cisco ASA' or 'pfSense'."
+                ]
+            },
+            {
+                id: "c3-l5", chunk: "chunk3", type: "long", qNum: "Unit 8 Long Q5",
+                question: "What is the role of OSINT in cybersecurity, and how do tools like TheHarvester, Maltego, and Shodan assist in gathering intelligence? Provide examples of how OSINT can be used for penetration testing, social engineering, and corporate reconnaissance.",
+                answer: [
+                    "<strong>Role of OSINT:</strong> Collects publicly available data to map out a target without touching its systems.",
+                    "<strong>Key Tools:</strong>",
+                    "• <strong>TheHarvester:</strong> Scrapes search engines and social networks for emails, subdomains, and open ports.",
+                    "• <strong>Maltego:</strong> Creates visual maps showing relationships between domains, IPs, emails, and people.",
+                    "• <strong>Shodan:</strong> Search engine that finds internet-connected devices (webcams, routers, ICS) with vulnerabilities.",
+                    "<strong>Use Cases:</strong>",
+                    "• <em>Penetration Testing:</em> Finding exposed subdomains and services as entry points.",
+                    "• <em>Social Engineering:</em> Using harvested emails and employee names for spear-phishing.",
+                    "• <em>Corporate Reconnaissance:</em> Mapping a company's public infrastructure and weak points."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 4: UNIT 7 - GAINING ACCESS, PRIVESC, MALWARE, NMAP & DOMAIN TOOLS
+            // =========================================================================
+            {
+                id: "c4-s7", chunk: "chunk4", chunkTitle: "Chunk 4: Unit 7 — Gaining Access, Privilege Escalation, Malware, Nmap & Domain Tools",
+                weightage: "8% Weightage (Priority 3)", type: "short", qNum: "Unit 7 Short Q7",
+                question: "Explain the function of Nmap in cybersecurity.",
+                answer: [
+                    "Nmap (Network Mapper) performs network discovery and security assessments by identifying live hosts, open ports, running service versions, OS types, and network topology."
+                ]
+            },
+            {
+                id: "c4-s23", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q23",
+                question: "What is vertical privilege escalation, and how does it differ from horizontal privilege escalation?",
+                answer: [
+                    "<strong>Vertical Privilege Escalation:</strong> Gaining higher-level privileges (moving from a standard user account to Administrator or root).",
+                    "<strong>Horizontal Privilege Escalation:</strong> Accessing another user's account at the <em>same</em> privilege level (e.g., via IDOR or session hijacking)."
+                ]
+            },
+            {
+                id: "c4-s24", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q24",
+                question: "How do social engineering attacks like phishing contribute to gaining unauthorized access to a system?",
+                answer: [
+                    "Phishing tricks users via deceptive emails or fake websites into divulging their login credentials, allowing attackers to log in directly as legitimate users."
+                ]
+            },
+            {
+                id: "c4-s25", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q25",
+                question: "Explain the concept of buffer overflow exploits and their role in privilege escalation.",
+                answer: [
+                    "A buffer overflow happens when more data is written to a memory buffer than it can hold, overwriting adjacent memory; attackers exploit this to execute arbitrary code with elevated (root/admin) privileges."
+                ]
+            },
+            {
+                id: "c4-s26", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q26",
+                question: "What is a Trojan horse in cybersecurity, and how does it function to allow attackers to gain access to a system?",
+                answer: [
+                    "A Trojan horse is malware disguised as legitimate software to trick users into executing it; once installed, it does not self-replicate but opens a <strong>backdoor</strong> for remote attacker access."
+                ]
+            },
+            {
+                id: "c4-s27", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q27",
+                question: "What are the main features of Nmap that make it an essential tool for network scanning?",
+                answer: [
+                    "<strong>Host Discovery</strong> (<code>-sn</code>), <strong>Port Scanning</strong> (<code>-sS</code>, <code>-sU</code>), <strong>Service Version Detection</strong> (<code>-sV</code>), <strong>OS Detection</strong> (<code>-O</code>), <strong>Nmap Scripting Engine (NSE)</strong>, and <strong>Firewall/IDS Evasion</strong>."
+                ]
+            },
+            {
+                id: "c4-s28", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q28",
+                question: "What is the role of Mimikatz in privilege escalation, and how can it be used to extract credentials?",
+                answer: [
+                    "Mimikatz is a post-exploitation tool for Windows that extracts plaintext passwords, PINs, Kerberos tickets, and password hashes directly from <strong>system memory (RAM)</strong> to escalate privileges."
+                ]
+            },
+            {
+                id: "c4-s29", chunk: "chunk4", type: "short", qNum: "Unit 7 Short Q29",
+                question: "Describe the potential risks associated with insecure file permissions in privilege escalation.",
+                answer: [
+                    "Overly permissive or <strong>world-writable files/directories</strong> allow low-privilege attackers to modify scripts or upload malicious binaries and execute them with administrative/root privileges."
+                ]
+            },
+            {
+                id: "c4-l21", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q21",
+                question: "Explain the process of gaining access in cybersecurity and discuss various methods used by attackers to gain unauthorized access to a system. Provide examples of each method.",
+                answer: [
+                    "<strong>Process:</strong> Gaining access is the stage where an attacker infiltrates a system or network to establish an initial foothold for further exploitation.",
+                    "<strong>Methods & Examples:</strong>",
+                    "• <strong>Exploiting Vulnerabilities:</strong> SQL Injection on web databases or EternalBlue on unpatched Windows SMB.",
+                    "• <strong>Social Engineering:</strong> Phishing or Spear Phishing emails to steal login credentials.",
+                    "• <strong>Credential Cracking:</strong> Brute-force attacks using <strong>Hydra</strong> or John the Ripper, and Credential Stuffing using leaked passwords.",
+                    "• <strong>Exploiting Misconfigurations:</strong> Using default credentials (<code>admin/admin</code>) or public AWS S3 cloud buckets.",
+                    "• <strong>Malware:</strong> Using Trojans (opening backdoors) or Ransomware."
+                ]
+            },
+            {
+                id: "c4-l22", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q22",
+                question: "What is privilege escalation in cybersecurity? Describe the two types of privilege escalation (vertical and horizontal) and give examples of techniques used for each type.",
+                answer: [
+                    "<strong>Definition:</strong> Elevating initial low-level user access to gain higher control (admin/root) or access other users' resources.",
+                    "<strong>1. Vertical Privilege Escalation (User → Admin/Root):</strong>",
+                    "• <em>Kernel Exploits:</em> Exploiting OS kernel flaws like <strong>Dirty COW (CVE-2016-5195)</strong> in Linux.",
+                    "• <em>Buffer Overflows:</em> Overwriting adjacent memory to run arbitrary code as root.",
+                    "• <em>Sudo Misconfigurations & Weak Permissions:</em> Abusing improper <code>sudoers</code> rules, world-writable files, or environment variables.",
+                    "<strong>2. Horizontal Privilege Escalation (User A → User B):</strong>",
+                    "• <em>IDOR (Insecure Direct Object References):</em> Modifying user ID values in URLs to view another user's files.",
+                    "• <em>Session Hijacking:</em> Stealing session cookies/tokens to impersonate another user."
+                ]
+            },
+            {
+                id: "c4-l23", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q23",
+                question: "What are the common types of malware, and how do they differ in their impact on systems? Discuss the characteristics of each type and provide an example.",
+                answer: [
+                    "<strong>1. Virus:</strong> Attaches to a host file; requires user execution to spread and corrupt files. <em>Ex:</em> CIH (Chernobyl).",
+                    "<strong>2. Worm:</strong> Self-replicates autonomously across networks without a host file, consuming bandwidth. <em>Ex:</em> ILOVEYOU / WannaCry.",
+                    "<strong>3. Trojan Horse:</strong> Disguised as legitimate software; does not self-replicate; opens backdoors. <em>Ex:</em> Zeus Trojan.",
+                    "<strong>4. Ransomware:</strong> Encrypts victim files and demands crypto ransom for the key. <em>Ex:</em> WannaCry.",
+                    "<strong>5. Spyware & Keyloggers:</strong> Covertly tracks user habits (<em>CoolWebSearch</em>) or records keystrokes to steal passwords (<em>Spyrix Keylogger</em>).",
+                    "<strong>6. Adware:</strong> Displays unwanted ads and slows systems. <em>Ex:</em> Fireball.",
+                    "<strong>7. Rootkits:</strong> Hides malware presence using root/kernel privileges. <em>Ex:</em> TDSS rootkit (infects MBR).",
+                    "<strong>8. Botnets:</strong> Network of infected 'zombie' PCs controlled remotely for DDoS attacks. <em>Ex:</em> Mirai Botnet."
+                ]
+            },
+            {
+                id: "c4-l24", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q24",
+                question: "Discuss the tools used for gaining access and privilege escalation in cybersecurity. How do tools like Metasploit, Hydra, and Mimikatz aid attackers, and what measures can organizations take to defend against them?",
+                answer: [
+                    "<strong>Tools for Gaining Access:</strong>",
+                    "• <strong>Metasploit Framework:</strong> Automates exploits and payloads against known vulnerabilities.",
+                    "• <strong>Hydra:</strong> Brute-forces passwords across SSH, HTTP, and FTP.",
+                    "• <strong>Nmap:</strong> Scans hosts and open ports to find targets.",
+                    "<strong>Tools for Privilege Escalation:</strong>",
+                    "• <strong>Mimikatz:</strong> Extracts credentials and hashes from Windows memory.",
+                    "• <strong>LinPEAS (Linux) & PowerUp (Windows):</strong> Scripts that automatically find privilege escalation misconfigurations.",
+                    "<strong>Defenses:</strong> Patch management, Principle of Least Privilege (PoLP), Multi-Factor Authentication (MFA), secure system hardening, and log monitoring."
+                ]
+            },
+            {
+                id: "c4-l25", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q25",
+                question: "Describe the concept of backdoors in cybersecurity. What are the different types of backdoors, and how do they maintain persistent access to a compromised system? Provide examples of software and hardware backdoors.",
+                answer: [
+                    "<strong>Concept & Persistence:</strong> A backdoor bypasses normal authentication to give attackers stealthy, long-term remote access with high privileges even if the original password or flaw is fixed.",
+                    "<strong>Types of Backdoors:</strong>",
+                    "• <strong>Software Backdoors:</strong> Malicious code embedded inside legitimate applications during development or installed by Trojans.",
+                    "• <strong>Hardware Backdoors:</strong> Physical modifications or malicious <strong>firmware implants</strong> on network routers/equipment to intercept traffic.",
+                    "• <strong>Backdoor Trojans:</strong> Malware dropped via phishing/drive-by downloads designed to give remote control of an infected machine."
+                ]
+            },
+            {
+                id: "c4-l26", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q26",
+                question: "What is Nmap, and how does it assist in network scanning and security assessments? Explain its key features, such as host discovery, port scanning, and OS detection.",
+                answer: [
+                    "<strong>What is Nmap:</strong> A cross-platform network scanning tool used to map networks and audit security.",
+                    "<strong>Key Features & Commands:</strong>",
+                    "• <strong>Host Discovery (<code>nmap -sn 192.168.1.0/24</code>):</strong> Checks which hosts are up without port scanning.",
+                    "• <strong>Port Scanning:</strong> Scans open ports via default scan (<code>nmap 192.168.1.1</code>), port range (<code>-p 20-1000</code>), Stealth SYN scan (<code>-sS</code>), or UDP scan (<code>-sU</code>).",
+                    "• <strong>Service Version Detection (<code>nmap -sV 192.168.1.1</code>):</strong> Identifies software and version numbers on open ports.",
+                    "• <strong>OS Detection (<code>nmap -O 192.168.1.1</code>) & Aggressive Scan (<code>nmap -A</code>):</strong> Analyzes IP stack behavior to identify the target OS.",
+                    "• <strong>Scripting Engine (NSE) & Evasion:</strong> Automates vulnerability checks and evades IDS/firewalls."
+                ]
+            },
+            {
+                id: "c4-l27", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q27",
+                question: "What are the defenses against gaining access and privilege escalation in cybersecurity? Discuss the importance of patch management, principle of least privilege (PoLP), and user training in preventing such attacks.",
+                answer: [
+                    "<strong>1. Patch Management:</strong> Regularly applying OS and software updates closes known vulnerabilities (like EternalBlue or Dirty COW).",
+                    "<strong>2. Principle of Least Privilege (PoLP):</strong> Granting users only the minimum privileges needed for their role limits breach impact and prevents easy privilege escalation.",
+                    "<strong>3. User Training:</strong> Educating staff about phishing and password hygiene stops social engineering attacks.",
+                    "<strong>4. Strong Authentication (MFA), Secure Configuration & Monitoring:</strong> MFA stops brute-force attacks, hardening removes default credentials/weak file permissions, and logging detects suspicious privilege changes."
+                ]
+            },
+            {
+                id: "c4-l28", chunk: "chunk4", type: "long", qNum: "Unit 7 Long Q28",
+                question: "How can organizations defend against backdoors and malware infections? Discuss strategies such as regular software updates, endpoint protection, and security monitoring to mitigate the risks posed by these threats.",
+                answer: [
+                    "<strong>1. Regular Software Updates:</strong> Patches vulnerabilities that worms, Trojans, and backdoors exploit.",
+                    "<strong>2. Endpoint Protection:</strong> Antivirus, anti-malware, and firewalls detect and block malware execution and backdoor installation.",
+                    "<strong>3. Security Monitoring:</strong> Continuously monitors logs and traffic for unauthorized outbound connections or abnormal data transfers.",
+                    "<strong>4. Network Segmentation:</strong> Divides the network into smaller segments to stop worms/ransomware from spreading laterally.",
+                    "<strong>5. User Education & Regular Backups:</strong> Prevents phishing infections and ensures data recovery after a ransomware attack."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 5: UNIT 10 - VPNS, ANONYMITY & REAL-WORLD ETHICAL HACKING
+            // =========================================================================
+            {
+                id: "c5-s19", chunk: "chunk5", chunkTitle: "Chunk 5: Unit 10 — VPNs, Anonymity & Real-World Applications of Ethical Hacking",
+                weightage: "7% Weightage (Priority 4)", type: "short", qNum: "Unit 10 Short Q19",
+                question: "What is the purpose of using tunneling protocols in VPNs?",
+                answer: [
+                    "Tunneling protocols (like <strong>OpenVPN, IPsec, L2TP, and PPTP</strong>) route internet traffic through a secure, encrypted path between the user's device and the VPN server to prevent third-party interception."
+                ]
+            },
+            {
+                id: "c5-s20", chunk: "chunk5", type: "short", qNum: "Unit 10 Short Q20",
+                question: "How does a VPN help in bypassing geo-restrictions?",
+                answer: [
+                    "By routing traffic through a remote VPN server located in an allowed region, masking the user's real IP address and location with the VPN server's IP."
+                ]
+            },
+            {
+                id: "c5-s21", chunk: "chunk5", type: "short", qNum: "Unit 10 Short Q21",
+                question: "What is the main difference between Red Teaming and Blue Teaming?",
+                answer: [
+                    "<strong>Red Teaming (Offensive):</strong> Simulates real-world adversary attacks to test an organization's security defenses.",
+                    "<strong>Blue Teaming (Defensive):</strong> Defends against simulated and real attacks by monitoring, detecting, and responding to threats."
+                ]
+            },
+            {
+                id: "c5-s22", chunk: "chunk5", type: "short", qNum: "Unit 10 Short Q22",
+                question: "What are the key security features to look for when choosing a VPN provider?",
+                answer: [
+                    "<strong>AES-256 encryption</strong>, a strict <strong>no-log policy</strong>, a <strong>kill switch</strong>, and <strong>DNS leak protection</strong> (along with good server locations, speed, and reliability)."
+                ]
+            },
+            {
+                id: "c5-s23", chunk: "chunk5", type: "short", qNum: "Unit 10 Short Q23",
+                question: "What is the role of an ethical hacker in penetration testing?",
+                answer: [
+                    "With the owner's consent, an ethical hacker simulates real-world attacks (reconnaissance, vulnerability scanning, exploitation, and reporting) to uncover and fix security weaknesses before malicious hackers exploit them."
+                ]
+            },
+            {
+                id: "c5-l11", chunk: "chunk5", type: "long", qNum: "Unit 10 Long Q11",
+                question: "Explain how a VPN works. What are the key features of VPNs that ensure privacy and security while browsing the internet?",
+                answer: [
+                    "<strong>How a VPN Works:</strong>",
+                    "• <strong>Encryption:</strong> Encrypts internet traffic between the user's device and the VPN server to prevent eavesdropping.",
+                    "• <strong>Tunneling Protocols:</strong> Uses protocols like OpenVPN, IPsec, L2TP, and PPTP to create a secure communication tunnel.",
+                    "• <strong>IP Masking:</strong> Routes traffic through a remote server to hide the user's real IP address and physical location.",
+                    "<strong>Key Security Features:</strong> AES-256 encryption, a no-log policy, an automatic kill switch, and DNS leak protection."
+                ]
+            },
+            {
+                id: "c5-l12", chunk: "chunk5", type: "long", qNum: "Unit 10 Long Q12",
+                question: "What are the main benefits of using a VPN? Discuss how it helps in protecting user privacy, security, and bypassing restrictions.",
+                answer: [
+                    "<strong>1. Privacy:</strong> Masks the user's IP address and location so online activities cannot be easily tracked by websites or ISPs.",
+                    "<strong>2. Security:</strong> Encrypts data in transit, protecting users from packet sniffing on unsecured networks like public Wi-Fi.",
+                    "<strong>3. Bypassing Geo-Restrictions:</strong> Routes traffic through servers in allowed countries to access region-locked content.",
+                    "<strong>4. Bypassing Censorship:</strong> Allows users to access websites and services blocked in certain countries."
+                ]
+            },
+            {
+                id: "c5-l13", chunk: "chunk5", type: "long", qNum: "Unit 10 Long Q13",
+                question: "Describe the different types of VPNs (Remote Access, Site-to-Site, and SSL/TLS) and explain their respective uses.",
+                answer: [
+                    "<strong>1. Remote Access VPN:</strong> Used by individual users (such as remote employees) to securely connect to a private corporate network from a remote location over the internet.",
+                    "<strong>2. Site-to-Site VPN:</strong> Used by organizations to securely connect entire networks together (e.g., linking two branch office locations).",
+                    "<strong>3. SSL/TLS VPN:</strong> Used for secure remote access through a web browser secured by SSL/TLS protocols, commonly used to access specific web-based corporate applications."
+                ]
+            },
+            {
+                id: "c5-l14", chunk: "chunk5", type: "long", qNum: "Unit 10 Long Q14",
+                question: "What are the risks associated with achieving online anonymity using tools like VPNs and Tor? How can user behavior impact their security?",
+                answer: [
+                    "<strong>1. False Sense of Security & User Behavior:</strong> Anonymity tools like Tor and VPNs do not provide 100% security—if a user logs into personal accounts, shares personal information, or clicks malicious links, their real identity can still be exposed.",
+                    "<strong>2. Provider Logging & Exit Node Risks:</strong> Untrusted VPN providers may keep activity logs, and Tor exit nodes can be monitored if traffic is not encrypted with HTTPS.",
+                    "<strong>3. Illegal Activities & Misuse:</strong> Anonymity tools can be misused to access illicit dark web content, carrying serious legal consequences."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 6: UNIT 9 - WEB ENUMERATION, INJECTION ATTACKS & BURP SUITE
+            // =========================================================================
+            {
+                id: "c6-s11", chunk: "chunk6", chunkTitle: "Chunk 6: Unit 9 — Website Enumeration, Injection Attacks & Burp Suite",
+                weightage: "5% Weightage (Priority 5)", type: "short", qNum: "Unit 9 Short Q11",
+                question: "What is the primary purpose of website enumeration?",
+                answer: [
+                    "To identify and map a website's structure, hidden directories, resources, and underlying technologies in order to uncover potential security vulnerabilities."
+                ]
+            },
+            {
+                id: "c6-s12", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q12",
+                question: "What is subdomain enumeration and why is it important for website security?",
+                answer: [
+                    "Subdomain enumeration discovers hidden or additional subdomains tied to a target website (e.g., <code>admin.example.com</code>, <code>blog.example.com</code>); it is important because forgotten subdomains often lack security updates and expose backdoors."
+                ]
+            },
+            {
+                id: "c6-s13", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q13",
+                question: "Explain the difference between SQL Injection and Command Injection.",
+                answer: [
+                    "<strong>SQL Injection (SQLi):</strong> Injects malicious SQL queries (e.g., <code>' OR 1=1</code>) into input fields to manipulate the application's <strong>backend database</strong>.",
+                    "<strong>Command Injection:</strong> Injects system shell commands (e.g., <code>; ls -al</code>) into an input field to execute arbitrary commands directly on the <strong>server's operating system</strong>."
+                ]
+            },
+            {
+                id: "c6-s14", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q14",
+                question: "Which tool is commonly used for DNS enumeration?",
+                answer: [
+                    "<strong>Fierce</strong>, <strong>dnsenum</strong>, <strong>dnsrecon</strong>, or <strong>dnsdumpster</strong>."
+                ]
+            },
+            {
+                id: "c6-s15", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q15",
+                question: "What is the role of Web Application Firewalls (WAF) in protecting against injection attacks?",
+                answer: [
+                    "A WAF inspects incoming HTTP traffic to <strong>detect and block malicious input payloads</strong> (such as SQLi, XSS, and Command Injection) before they reach the web application."
+                ]
+            },
+            {
+                id: "c6-s16", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q16",
+                question: "Explain the concept of sensitive data exposure and how it can be detected in web applications.",
+                answer: [
+                    "Sensitive data exposure occurs when passwords or credit card numbers are transmitted or stored without strong encryption; it is detected by checking for missing <strong>SSL/TLS (HTTPS)</strong> in transit and weak encryption at rest."
+                ]
+            },
+            {
+                id: "c6-s17", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q17",
+                question: "What are the best practices for securing web applications against SQL Injection attacks?",
+                answer: [
+                    "<strong>1. Use Prepared Statements (Parameterized Queries)</strong> to separate user input from SQL code.",
+                    "<strong>2. Input Validation and Sanitization</strong> on all user inputs.",
+                    "<strong>3. Deploy a Web Application Firewall (WAF)</strong>."
+                ]
+            },
+            {
+                id: "c6-s18", chunk: "chunk6", type: "short", qNum: "Unit 9 Short Q18",
+                question: "What is the function of Burp Repeater in testing injection vulnerabilities?",
+                answer: [
+                    "Burp Repeater allows a tester to <strong>manually modify and resend HTTP requests</strong> (such as changing URL or POST parameters with injection strings) to test how the server responds."
+                ]
+            },
+            {
+                id: "c6-l6", chunk: "chunk6", type: "long", qNum: "Unit 9 Long Q6",
+                question: "Explain the different types of injection attacks and how they can affect a website's security. Include examples and potential consequences of each.",
+                answer: [
+                    "<strong>1. SQL Injection (SQLi):</strong> Injects SQL statements (e.g., <code>' OR 1=1--</code> or <code>'; DROP TABLE users;</code>) into login forms/URLs. <em>Consequence:</em> Auth bypass, stealing sensitive DB records, or deleting tables.",
+                    "<strong>2. Command Injection:</strong> Injects OS commands (e.g., <code>; ls -al</code> or <code>127.0.0.1; cat /etc/passwd</code>) into fields interacting with the system shell. <em>Consequence:</em> Full Remote Code Execution (RCE) on the server.",
+                    "<strong>3. Cross-Site Scripting (XSS):</strong> Injects malicious scripts (JavaScript) into web pages viewed by other users. <em>Consequence:</em> Stealing session cookies, account takeover, or site defacement.",
+                    "<strong>Protection:</strong> Input validation/sanitization, prepared statements (parameterized queries), and WAFs."
+                ]
+            },
+            {
+                id: "c6-l7", chunk: "chunk6", type: "long", qNum: "Unit 9 Long Q7",
+                question: "Describe the process of website enumeration, including the tools used for subdomain enumeration, DNS enumeration, and directory/file enumeration. Discuss how each tool contributes to identifying vulnerabilities.",
+                answer: [
+                    "<strong>1. Subdomain Enumeration:</strong> Discovers hidden subdomains (<code>admin.example.com</code>). <em>Tools:</em> <strong>Sublist3r</strong> (search engine scraping), <strong>Amass</strong> (DNS scraping & brute-force), <strong>dnsdumpster</strong>.",
+                    "<strong>2. DNS Enumeration:</strong> Gathers A, MX, NS records and tests zone transfers. <em>Tools:</em> <strong>Fierce</strong>, <strong>dnsenum</strong>, <strong>dnsrecon</strong>.",
+                    "<strong>3. Directory and File Enumeration:</strong> Brute-forces hidden folders, config files, and backups. <em>Tools:</em> <strong>DirBuster</strong>, <strong>Gobuster</strong>, <strong>FFUF</strong>.",
+                    "<strong>4. Technology Identification:</strong> Fingerprints CMS and web servers using <strong>WhatWeb</strong> and <strong>Wappalyzer</strong> so testers can match known CVEs."
+                ]
+            },
+            {
+                id: "c6-l8", chunk: "chunk6", type: "long", qNum: "Unit 9 Long Q8",
+                question: "Explain how Cross-Site Scripting (XSS) attacks work and how to prevent them. Discuss the methods to detect XSS vulnerabilities and the tools that can be used for this purpose.",
+                answer: [
+                    "<strong>How XSS Works:</strong> Attackers inject malicious JavaScript (e.g., <code>&lt;script&gt;...document.cookie&lt;/script&gt;</code>) into unvalidated inputs; when other users view the page, their browser executes the script, stealing session cookies or defacing the site.",
+                    "<strong>Detection & Tools:</strong> Check if unencoded user input is reflected in web pages; automate scanning with <strong>Burp Suite</strong>, <strong>OWASP ZAP</strong>, and <strong>XSSer</strong>.",
+                    "<strong>Prevention:</strong> Proper <strong>output encoding</strong> (HTML/JS encoding), input validation/sanitization, <strong>Content Security Policy (CSP)</strong> headers, and <code>HttpOnly</code> cookie flags."
+                ]
+            },
+            {
+                id: "c6-l9", chunk: "chunk6", type: "long", qNum: "Unit 9 Long Q9",
+                question: "Discuss the concept of Command Injection and its potential impact on a web application. Provide examples of how Command Injection vulnerabilities can be tested and mitigated.",
+                answer: [
+                    "<strong>Concept & Impact:</strong> Occurs when user input is passed unsafely to the server's OS shell (Bash, <code>cmd.exe</code>), allowing attackers to execute arbitrary OS commands, read confidential files, and take over the host.",
+                    "<strong>Testing Example:</strong> Appending shell operators like <code>; ls -al</code> or <code>127.0.0.1; cat /etc/passwd</code> in an input field using <strong>Burp Proxy / Repeater</strong> and checking if directory/file output is returned.",
+                    "<strong>Mitigation:</strong> Avoid calling OS commands from code; validate and sanitize inputs against a strict allowlist; use safe APIs instead of shell interpreters."
+                ]
+            },
+            {
+                id: "c6-l10", chunk: "chunk6", type: "long", qNum: "Unit 9 Long Q10",
+                question: "Describe the importance of technology and framework identification in securing a website. Discuss how tools like WhatWeb and Wappalyzer help identify vulnerabilities related to the technologies being used.",
+                answer: [
+                    "<strong>Importance:</strong> Identifying a website's CMS (WordPress, Drupal), web server (Apache, Nginx), and JS libraries reveals outdated components that have public CVEs.",
+                    "<strong>How Tools Help:</strong>",
+                    "• <strong>WhatWeb:</strong> Command-line tool (<code>whatweb target.com</code>) that inspects HTTP headers and page source to identify CMS, server versions, and plugins.",
+                    "• <strong>Wappalyzer:</strong> Browser extension/CLI tool that fingerprints web servers, frameworks, and libraries so admins can patch vulnerable versions."
+                ]
+            },
+
+            // =========================================================================
+            // CHUNK 7: EXTRA SYLLABUS MUST-READS (TOPICS IN NOTES BUT NOT SEPARATE IN QB)
+            // =========================================================================
+            {
+                id: "c7-e1", chunk: "chunk7", chunkTitle: "Chunk 7: Extra Syllabus Topics (Units 7.4, 9.2, 9.3, 10.2, 10.3 — Read Once!)",
+                weightage: "Covers Syllabus Gaps", type: "extra", qNum: "Syllabus Topic 7.4",
+                question: "Domain Enumeration Tools: Explain Whois, Mitaka, DNSRecon, Fierce, and Dig with commands.",
+                answer: [
+                    "<strong>1. Whois (<code>whois example.com</code>):</strong> Queries WHOIS databases for domain owner, registrar, contact info, name servers, and expiry date.",
+                    "<strong>2. Mitaka (<code>mitaka --domain example.com</code>):</strong> Automated tool/extension that discovers subdomains and collects A, MX, TXT, and CNAME records.",
+                    "<strong>3. DNSRecon (<code>dnsrecon -d example.com</code>):</strong> Automates DNS queries, zone transfers, and subdomain brute-forcing.",
+                    "<strong>4. Fierce (<code>fierce --domain example.com</code>):</strong> Scans domains to find subdomains and DNS infrastructure vulnerabilities.",
+                    "<strong>5. Dig (<code>dig example.com any</code>):</strong> Command-line tool to query A, MX, NS, and TXT DNS records directly."
+                ]
+            },
+            {
+                id: "c7-e2", chunk: "chunk7", type: "extra", qNum: "Syllabus Topic 9.2",
+                question: "Burp Suite for Injection Testing: Explain all 6 Core Components of Burp Suite.",
+                answer: [
+                    "<strong>1. Burp Proxy:</strong> Man-in-the-Middle proxy (<code>127.0.0.1:8080</code>) that intercepts, inspects, and modifies HTTP/S requests between browser and server.",
+                    "<strong>2. Burp Repeater:</strong> Manually modifies and resends individual HTTP requests repeatedly to test injection points.",
+                    "<strong>3. Burp Intruder:</strong> Automates customized payload attacks / brute-forcing (e.g., fuzzing login fields with SQLi lists like <code>' OR 1=1--</code>).",
+                    "<strong>4. Burp Scanner (Pro):</strong> Automatically crawls and scans web apps for SQLi, XSS, and OS command injection.",
+                    "<strong>5. Burp Decoder:</strong> Encodes/decodes data between Base64, URL, HTML, and Hex formats.",
+                    "<strong>6. Extensions:</strong> Adds plugins like <em>SQLiPy</em> for automated SQLMap integration."
+                ]
+            },
+            {
+                id: "c7-e3", chunk: "chunk7", type: "extra", qNum: "Syllabus Topic 9.3",
+                question: "Vulnerability Identification in Web Applications & CVSS v3.1 Severity Ratings.",
+                answer: [
+                    "<strong>6 Common Web Vulnerabilities (Unit 9.3):</strong> SQL Injection (SQLi), Cross-Site Scripting (XSS), Cross-Site Request Forgery (CSRF — missing anti-CSRF tokens), Insecure Deserialization, Security Misconfigurations, and Sensitive Data Exposure.",
+                    "<strong>CVSS Score Ranges (Lecture Notes 9.3.1):</strong>",
+                    "• <strong>0.0:</strong> None | <strong>0.1–3.9:</strong> Low | <strong>4.0–6.9:</strong> Medium | <strong>7.0–8.9:</strong> High | <strong>9.0–10.0:</strong> Critical."
+                ]
+            },
+            {
+                id: "c7-e4", chunk: "chunk7", type: "extra", qNum: "Syllabus Topic 10.2",
+                question: "Real-World Applications of Ethical Hacking (6 Key Applications).",
+                answer: [
+                    "<strong>1. Penetration Testing:</strong> Simulating attacks via Reconnaissance, Vulnerability Scanning, Exploitation, and Reporting.",
+                    "<strong>2. Web Application Security Testing:</strong> Testing login forms and APIs against SQLi, XSS, and CSRF.",
+                    "<strong>3. Network Security Audits:</strong> Network mapping, traffic analysis, and firewall rule reviews.",
+                    "<strong>4. Social Engineering & Phishing Simulations:</strong> Sending mock phishing emails to test employee awareness.",
+                    "<strong>5. Wireless Network Security Testing:</strong> Testing for weak WEP/WPA encryption and Rogue Access Points.",
+                    "<strong>6. Red Teaming (Offensive) & Blue Teaming (Defensive):</strong> Collaborative attack/defense exercises (used across Banking/PCI-DSS, Healthcare/HIPAA, E-Commerce, and Government)."
+                ]
+            },
+            {
+                id: "c7-e5", chunk: "chunk7", type: "extra", qNum: "Syllabus Topic 10.3",
+                question: "Ethical Hacking as a Profession: Skills, Certifications, Career Roles & Future Trends.",
+                answer: [
+                    "<strong>Required Skills:</strong> Networking, Linux/Windows OS mastery, programming (Python, JS, C), and security tools (Burp Suite, Wireshark, Metasploit).",
+                    "<strong>Top Certifications:</strong> <strong>CEH</strong> (Certified Ethical Hacker), <strong>OSCP</strong> (Offensive Security Certified Professional), <strong>CompTIA Security+</strong>, and <strong>CISSP</strong>.",
+                    "<strong>Career Roles:</strong> Penetration Tester, Security Consultant, SOC Analyst / Incident Responder, Red Team Operator, and Bug Bounty Hunter.",
+                    "<strong>Future Trends (5 Points):</strong> (1) High global demand for cyber pros, (2) AI & Automation in pentesting/LLM Red Teaming, (3) Cloud Security Testing (AWS/Azure), (4) IoT & Embedded System Security, and (5) Blockchain & Smart Contract Security."
+                ]
+            }
+        ];
+
+        let currentChunkFilter = 'all';
+        let readItems = new Set(JSON.parse(localStorage.getItem('cs_t2_read_items') || '[]'));
+
+        function saveProgress() {
+            localStorage.setItem('cs_t2_read_items', JSON.stringify([...readItems]));
+            updateScoreUI();
+        }
+
+        function toggleRead(id) {
+            if (readItems.has(id)) {
+                readItems.delete(id);
+            } else {
+                readItems.add(id);
+            }
+            saveProgress();
+            renderQuestions();
+        }
+
+        function markAllVisibleRead() {
+            const visibleCards = document.querySelectorAll('[data-qid]');
+            visibleCards.forEach(card => readItems.add(card.getAttribute('data-qid')));
+            saveProgress();
+            renderQuestions();
+        }
+
+        function resetProgress() {
+            readItems.clear();
+            saveProgress();
+            renderQuestions();
+        }
+
+        function updateScoreUI() {
+            const total = studyData.length;
+            const done = readItems.size;
+            document.getElementById('progressCount').textContent = `${done} / ${total} items`;
+
+            // Assume 17/20 MCQ marks + proportional share of 30 descriptive marks (up to 28 realistic)
+            const mcqBase = 17;
+            const theoryEarned = (done / total) * 28;
+            const totalEstimated = Math.min(50, (mcqBase + theoryEarned)).toFixed(1);
+            const pct = Math.min(100, Math.round((totalEstimated / 50) * 100));
+
+            const scoreEl = document.getElementById('scoreEstimate');
+            scoreEl.textContent = `${totalEstimated} / 50 Marks`;
+            scoreEl.className = totalEstimated >= 35
+                ? 'font-extrabold text-emerald-400 text-sm'
+                : 'font-extrabold text-amber-400 text-sm';
+
+            document.getElementById('scoreBar').style.width = `${pct}%`;
+        }
+
+        function setChunkFilter(chunk) {
+            currentChunkFilter = chunk;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-tab') === chunk) {
+                    btn.className = 'tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white whitespace-nowrap';
+                } else {
+                    btn.className = 'tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap';
+                }
+            });
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            const typeFilter = document.getElementById('typeFilter').value;
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            const chunksOrder = ['chunk1', 'chunk2', 'chunk3', 'chunk4', 'chunk5', 'chunk6', 'chunk7'];
+            const chunkMeta = {
+                chunk1: { title: "CHUNK 1: Unit 6 (Part A) — OWASP Top 10, Info Gathering & Recon vs. Footprinting", badge: "Unit 6 • 13% Weightage (Priority 1)", color: "emerald" },
+                chunk2: { title: "CHUNK 2: Unit 6 (Part B) — Social Engineering, OSINT, Scanning & Metasploit", badge: "Unit 6 • 13% Weightage (Priority 1)", color: "emerald" },
+                chunk3: { title: "CHUNK 3: Unit 8 — Wireshark, OpenVAS, Web/OSINT Tools & Firewall Identification", badge: "Unit 8 • 10% Weightage (Priority 2)", color: "teal" },
+                chunk4: { title: "CHUNK 4: Unit 7 — Gaining Access, Privilege Escalation, Malware, Nmap & Domain Tools", badge: "Unit 7 • 8% Weightage (Priority 3)", color: "sky" },
+                chunk5: { title: "CHUNK 5: Unit 10 — VPNs, Anonymity & Real-World Applications of Ethical Hacking", badge: "Unit 10 • 7% Weightage (Priority 4)", color: "indigo" },
+                chunk6: { title: "CHUNK 6: Unit 9 — Website Enumeration, Injection Attacks & Burp Suite", badge: "Unit 9 • 5% Weightage (Priority 5)", color: "purple" },
+                chunk7: { title: "CHUNK 7: Extra Syllabus Topics (In Notes/Syllabus, Not Separate in QB)", badge: "Units 7.4, 9.2, 9.3, 10.2, 10.3", color: "amber" }
+            };
+
+            let html = '';
+
+            chunksOrder.forEach(chunkKey => {
+                if (currentChunkFilter !== 'all' && currentChunkFilter !== chunkKey) return;
+
+                const items = studyData.filter(item => {
+                    if (item.chunk !== chunkKey) return false;
+                    if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+                    if (query) {
+                        const hay = (item.qNum + ' ' + item.question + ' ' + item.answer.join(' ')).toLowerCase();
+                        return hay.includes(query);
+                    }
+                    return true;
+                });
+
+                if (items.length === 0) return;
+
+                const meta = chunkMeta[chunkKey];
+                const doneInChunk = items.filter(i => readItems.has(i.id)).length;
+
+                html += `
+                <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-${meta.color}-400">${meta.badge}</span>
+                            <h2 class="text-base sm:text-lg font-extrabold text-white mt-0.5">${meta.title}</h2>
+                        </div>
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-slate-300 self-start sm:self-center">
+                            ${doneInChunk} / ${items.length} Read
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3">
+                `;
+
+                items.forEach(item => {
+                    const isRead = readItems.has(item.id);
+                    const typeBadge = item.type === 'short'
+                        ? '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">Short Answer</span>'
+                        : item.type === 'long'
+                        ? '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">Long Q (Condensed)</span>'
+                        : '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Syllabus Gap Must-Read</span>';
+
+                    html += `
+                        <div data-qid="${item.id}" onclick="toggleRead('${item.id}')" class="chunk-card cursor-pointer rounded-xl p-4 border ${isRead ? 'bg-emerald-950/20 border-emerald-500/40' : 'bg-slate-950/90 border-slate-800 hover:border-slate-700'}">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex items-start gap-3">
+                                    <input type="checkbox" ${isRead ? 'checked' : ''} onclick="event.stopPropagation(); toggleRead('${item.id}')" class="mt-1 w-4 h-4 rounded accent-emerald-500 cursor-pointer">
+                                    <div>
+                                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                                            <span class="text-xs font-mono font-bold text-emerald-400">${item.qNum}</span>
+                                            ${typeBadge}
+                                        </div>
+                                        <h3 class="text-sm sm:text-base font-bold ${isRead ? 'text-emerald-200 line-through decoration-emerald-500/50' : 'text-white'}">${item.question}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="mt-3 pl-7 space-y-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                ${item.answer.map(line => `<li class="relative before:content-['•'] before:absolute before:-left-3.5 before:text-emerald-400">${line}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+
+                html += `</div></section>`;
+            });
+
+            if (!html) {
+                html = `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400 text-sm">No questions match your filter. Try clearing the search box!</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        window.onload = function () {
+            updateScoreUI();
+            renderQuestions();
+        };
+    </script>
+</body>
+</html>
